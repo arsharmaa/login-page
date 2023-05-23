@@ -1,30 +1,24 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import crypto from 'crypto';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './form.css';
+import { useRouter } from 'next/router';
+import ProfilePage from './profilePage.tsx';
 
 interface LoginFormProps {
-  username: string;
-  password: string;
   onSubmit: (username: string, password: string) => void;
 }
+
 const LoginForm: React.FC<LoginFormProps> = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    // This effect will only run on the client side
-    // You can add any necessary client-side initialization logic here
-  }, []);
-
   const hashPassword = (password: string): string => {
     const hash = crypto.createHash('sha256');
-    return hash.update(password).digest('hex', (err, hashedPassword) => {
-    if (err) {
-      console.error('Error hashing password:', err);
-      return;
-    });
+    return hash.update(password).digest('hex');
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -35,32 +29,63 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
       if (response.status === 200 && response.data.success) {
         alert("Authentication Successful with status: " + response.status);
+         // window.location.href = '/profile';
+         return(
+           <div><ProfilePage/></div>
+         )
       } else {
         setError('Authentication failed');
       }
     } catch (error) {
       console.error(error);
-      setError('An error occurred during authentication');
+      setError('An error occurred during authentication, check your username and password');
     }
   };
 
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-      {error && <p>{error}</p>}
-    </form>
+    <div className="container-fluid form-div">
+      <h1 className="text-primary display-4 mb-4">Login Page</h1>
+
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label text-secondary fw-bold">
+            Username
+          </label>
+          <input
+            type="text"
+            className="form-control rounded-pill"
+            id="username"
+            placeholder="Enter your username"
+            style={{ width: '70%' }}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label text-secondary fw-bold">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control rounded-pill"
+            id="password"
+            placeholder="Enter your password"
+            style={{ width: '70%' }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button
+          type="submit"
+          className="mt-3 btn btn-primary btn-block rounded-pill submit-btn"
+          style={{ width: '70%' }}
+        >
+          Login
+        </button>
+        {error && <p className="text-danger mt-3">{error}</p>}
+      </form>
+    </div>
   );
 };
 

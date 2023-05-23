@@ -9,6 +9,7 @@ const hashedPassword = crypto.createHash('sha256').update("password").digest('he
     if (err) {
       console.error('Error hashing password:', err);
       return;
+    }
     });
 
 app.use(bodyParser.json());

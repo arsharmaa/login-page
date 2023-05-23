@@ -1,10 +1,12 @@
+"use client";
+
 import styles from './page.module.css';
-import LoginForm from './components/LoginForm';
+import LoginForm from './components/LoginForm.tsx';
 export default function Home() {
+
   return (
     <div className="main-container">
-    <h1>Login Page</h1>
-    <LoginForm />
+    <LoginForm  />
     </div>
   )
 }
