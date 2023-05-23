@@ -1,18 +1,12 @@
 "use client";
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import crypto from 'crypto';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './form.css';
-import { useRouter } from 'next/router';
-import ProfilePage from './profilePage.tsx';
 
-interface LoginFormProps {
-  onSubmit: (username: string, password: string) => void;
-}
 
-const LoginForm: React.FC<LoginFormProps> = () => {
+const LoginForm: React.FC= () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState('');
@@ -29,10 +23,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
       if (response.status === 200 && response.data.success) {
         alert("Authentication Successful with status: " + response.status);
-         // window.location.href = '/profile';
-         return(
-           <div><ProfilePage/></div>
-         )
+
       } else {
         setError('Authentication failed');
       }
