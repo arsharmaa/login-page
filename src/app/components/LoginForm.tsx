@@ -20,7 +20,11 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
   const hashPassword = (password: string): string => {
     const hash = crypto.createHash('sha256');
-    return hash.update(password).digest('hex');
+    return hash.update(password).digest('hex', (err, hashedPassword) => {
+    if (err) {
+      console.error('Error hashing password:', err);
+      return;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {

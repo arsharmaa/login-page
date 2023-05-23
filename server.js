@@ -5,7 +5,11 @@ const crypto = require('crypto');
 
 const app = express();
 const port = 3001;
-const hashedPassword = crypto.createHash('sha256').update("password").digest('hex');
+const hashedPassword = crypto.createHash('sha256').update("password").digest('hex', (err, hashedPassword) => {
+    if (err) {
+      console.error('Error hashing password:', err);
+      return;
+    });
 
 app.use(bodyParser.json());
 app.use(cors());
