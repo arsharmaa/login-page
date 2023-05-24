@@ -6,12 +6,7 @@ const ProfilePage: React.FC = () => {
     <div className="container">
       <div className="text-center mt-5">
         <h1 className="text-primary display-4 mb-4">Profile Page</h1>
-        <img
-          src="https://randomuser.me/api/portraits/men/1.jpg"
-          alt="Profile Picture"
-          className="rounded-circle mb-3"
-          style={{ width: '200px', height: '200px' }}
-        />
+      
         <h2 className="text-primary">Username</h2>
         <div className="row justify-content-center mt-4">
           <div className="col-lg-6">
